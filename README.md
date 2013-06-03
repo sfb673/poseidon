@@ -1,6 +1,20 @@
-= poseidon
+# POSEIdON
 
-Description goes here.
+POSEIdON (short for "Pimp your Objects with SEmantic InformatiON") is a small
+library that lets you add RDF information to classes and their instances.
+It also adds methods `as_rdf` and `to_rdf` to those classes and objects that
+can be used to retrieve RDF representations in various formats, based on
+the functionality provided by the [RDF gem](http://rubygems.org/gems/rdf).
+
+## How to use this gem
+
+Simply include POSEIdON to classes where you want to use RDF features:
+
+```` {.Ruby}
+class Foo
+  include Poseidon
+end
+````
 
 == Contributing to poseidon
  
