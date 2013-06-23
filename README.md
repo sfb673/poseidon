@@ -134,4 +134,3 @@ _(none at the moment.)_
 
 Copyright (c) 2012, 2013 Peter Menke, SFB 673.
 See LICENSE.txt for further details.
-
