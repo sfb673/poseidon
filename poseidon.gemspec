@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
     "features/support/env.rb",
     "lib/poseidon.rb",
     "lib/poseidon/mixins.rb",
+    "poseidon.gemspec",
     "spec/corpus_spec.rb",
     "spec/examplecode_spec.rb",
     "spec/poseidon_spec.rb",
