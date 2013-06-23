@@ -15,10 +15,10 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "poseidon"
-  gem.homepage = "http://github.com/pmenke/poseidon"
-  gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.homepage = "https://github.com/sfb673/poseidon"
+  gem.license = "LGPL"
+  gem.summary = %Q{POSEIdON is a Ruby gem that "Pimps Objects with SEmantic InformatiON", RDF style, suitable for building ontologies.}
+  gem.description = %Q{POSEIdON is a Ruby gem that "Pimps Objects with SEmantic InformatiON", RDF style, suitable for building ontologies.}
   gem.email = "pmenke@googlemail.com"
   gem.authors = ["Peter Menke"]
   # dependencies defined in Gemfile
