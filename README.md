@@ -109,8 +109,15 @@ all configurations described above.
 `to_rdf` takes this graph and exports it to an RDF serialisation format.
 Currently, only *ntriples* is supported, more will follow.
 
+## Release history:
+
+### 1.0.0 (23 June 2013) initial relase
+
+- initial, minimal release
 
 ## Plans
+
+_(none at the moment.)_
 
 
 ## Contributing to POSEIdON
