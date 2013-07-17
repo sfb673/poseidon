@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "poseidon"
-  s.version = "1.0.0"
+  s.version = "1.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Peter Menke"]
-  s.date = "2013-06-23"
+  s.date = "2013-07-17"
   s.description = "POSEIdON is a Ruby gem that \"Pimps Objects with SEmantic InformatiON\", RDF style, suitable for building ontologies."
   s.email = "pmenke@googlemail.com"
   s.extra_rdoc_files = [
@@ -29,6 +29,8 @@ Gem::Specification.new do |s|
     "features/support/env.rb",
     "lib/poseidon.rb",
     "lib/poseidon/mixins.rb",
+    "pkg/poseidon-1.0.0.gem",
+    "pkg/poseidon-1.1.1.gem",
     "poseidon.gemspec",
     "spec/corpus_spec.rb",
     "spec/examplecode_spec.rb",
@@ -46,6 +48,9 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<string_utils>, [">= 0"])
+      s.add_runtime_dependency(%q<rdf>, [">= 0"])
+      s.add_runtime_dependency(%q<rdf-turtle>, [">= 0"])
+      s.add_runtime_dependency(%q<rdf-rdfxml>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["~> 2.8.0"])
       s.add_development_dependency(%q<yard>, ["~> 0.7"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
@@ -55,6 +60,9 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<simplecov>, [">= 0"])
     else
       s.add_dependency(%q<string_utils>, [">= 0"])
+      s.add_dependency(%q<rdf>, [">= 0"])
+      s.add_dependency(%q<rdf-turtle>, [">= 0"])
+      s.add_dependency(%q<rdf-rdfxml>, [">= 0"])
       s.add_dependency(%q<rspec>, ["~> 2.8.0"])
       s.add_dependency(%q<yard>, ["~> 0.7"])
       s.add_dependency(%q<rdoc>, ["~> 3.12"])
@@ -65,6 +73,9 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<string_utils>, [">= 0"])
+    s.add_dependency(%q<rdf>, [">= 0"])
+    s.add_dependency(%q<rdf-turtle>, [">= 0"])
+    s.add_dependency(%q<rdf-rdfxml>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 2.8.0"])
     s.add_dependency(%q<yard>, ["~> 0.7"])
     s.add_dependency(%q<rdoc>, ["~> 3.12"])
