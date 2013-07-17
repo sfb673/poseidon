@@ -5,6 +5,11 @@ source "http://rubygems.org"
 
 gem 'string_utils'
 
+gem 'rdf'
+gem 'rdf-turtle'
+gem 'rdf-rdfxml'
+
+
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
 group :development do

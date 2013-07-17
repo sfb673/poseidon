@@ -1,5 +1,6 @@
 require 'rdf'
 require 'rdf/ntriples'
+require 'rdf/turtle'
 require 'rdf/rdfxml'
 include RDF
 
