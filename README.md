@@ -111,6 +111,11 @@ Currently, only *ntriples* is supported, more will follow.
 
 ## Release history:
 
+### 1.1.1 (17 July 2013)
+
+- Turtle format
+- minor bux fixes
+
 ### 1.0.0 (23 June 2013) initial relase
 
 - initial, minimal release
