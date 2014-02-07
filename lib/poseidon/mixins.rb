@@ -10,7 +10,6 @@ module Poseidon
       class_variable_set :@@rdf_graph, RDF::Graph.new # unless defined?(@@rdf_graph)
       class_variable_set :@@rdf_props, {} # unless defined?(@@rdf_props)
       class_variable_set :@@rdf_includes, []
-      puts "RDF Graph included: %s" % class_variable_get(:@@rdf_graph).size
     end
   end
 
@@ -31,10 +30,7 @@ module Poseidon
 
     # Adds a type declaration triple to the class RDF graph.
     def rdf_type(target)
-      #puts self.name
-      #puts class_variable_get(:@@rdf_graph).size
       class_variable_get(:@@rdf_graph) << [class_variable_get(:@@self_uri), RDF::type, RDF::URI(target)]
-      #puts class_variable_get(:@@rdf_graph).size
     end
 
     # Adds a "see also" declaration triple to the class RDF graph.
@@ -81,9 +77,6 @@ module Poseidon
         new_prop_entry[:value_expression] = opts[:value_expression]
       end
       # @todo if there are options: apply them!
-      # puts "Class of new prop entry:  %s" % new_prop_entry.class.name
-      # puts "Class of props container: %s" % class_variable_get(:@@rdf_props).class.name
-
       class_variable_get(:@@rdf_props)[prop_name] = new_prop_entry
     end
 
@@ -136,7 +129,6 @@ module Poseidon
     # If no explicit URI is given and the class has an instance URI scheme,
     # this will be used to generate the URI of the current object.
     def self_uri(value=(getter=true;nil))
-      #puts "  -> self_uri in #{self.class.name}"
       instance_variable_set(:@self_uri, RDF::URI(value)) unless getter
       if instance_variable_defined? :@self_uri
         return instance_variable_get :@self_uri
@@ -147,9 +139,6 @@ module Poseidon
         else
 
           if self.class.class_variable_defined?(:@@instance_uri_scheme)
-            #puts "    -> Evaluating %s" % self.class.class_variable_get(:@@instance_uri_scheme)
-            #puts self.respond_to? :document
-            #puts self.document
             instance_variable_set :@cached_self_uri, RDF::URI(eval('"'+self.class.class_variable_get(:@@instance_uri_scheme)+'"'))
             return instance_variable_get :@cached_self_uri
           end
@@ -183,41 +172,20 @@ module Poseidon
     # Returns the internal RDF graph representation for this object,
     # containing all triples of this object.
     def as_rdf(opts = {})
-      #puts "as_rdf :: %s" % self.class.name
-      #puts self.send :self_uri
       u = RDF::URI(self_uri)
-      #puts "  SELFURI: %s" % u
       rdf_graph
       result_graph = RDF::Graph.new(rdf_graph)
 
-      #puts "  SELFURI: %s" % u
-      #puts "SELF: %s" % self.class.name
-      #puts " IUS: %s" % self.class.instance_uri_scheme
-      #puts "  SELFURI: %s" % u
       # add type to its class
       result_graph << [u, RDF::type, self.class.self_uri ]
-      #puts "  SELFURI: %s" % u
-      #puts "<%s>" % result_graph.statements.first.subject
-      #puts "****"
       # add all property values
-            # puts "as_rdf // RDF property count: %i" % self.class.rdf_props.size
-            # puts "code thinks we are in this class: %s" % self.class.name
-            # puts "RDF_PROPS object id %i" % self.class.rdf_props.object_id
       if self.class.respond_to?(:rdf_props)
         self.class.rdf_props.each_pair do |prop_name, prop|
-          # puts "Now looking into RDF props for this object: %s" % self.class.name
-          # puts "  " + prop.inspect
           # 1. add property entry
           # SELF, hasPROP, valueOfProp
-          #puts "Keys: %s" % (prop.keys * ",")
           if respond_to?(prop[:field]) && !(send(prop[:field]).nil?)
             if prop.has_key?(:value_expression)
-              #puts "Evaluating expression %s in the context of %s" % [prop[:value_expression], self]
-              #puts"     = %s" % eval(prop[:value_expression])
               result_graph << [self_uri, prop[:type], eval(prop[:value_expression]) ]
-              #puts " SUB %s" % self_uri.class.name
-              #puts " PRE %s" % prop[:type].class.name
-              #puts " OBJ %s" % eval(prop[:value_expression]).class.name
             else
               result_graph << [self_uri, prop[:type], RDF::Literal.new(send(prop[:field])) ]
             end
@@ -230,27 +198,15 @@ module Poseidon
         self.class.rdf_includes.each do |incl_struct|
           incl = incl_struct[0]
           incl_uri = incl_struct[1]
-          #puts "RDF include. %s" % incl.to_s
           if respond_to?(incl) && !(incl.nil?)
             # okay, objects has something under this name
             member = send(incl)
             if member.kind_of?(Enumerable)
-              #puts "MEMBER: %s" % member.class.name
               member.each do |item|
-                #puts "  ITEM: %s" % item.class.name
-                #puts "        %s" % incl
-                #puts "        %s" % incl_uri
-                #puts "        %s" % self_uri
-                #puts "        %s" % RDF::URI(incl_uri)
-                #puts "        %s" % (item.respond_to? :self_uri )
-
-
                 result_graph << item.as_rdf if item.respond_to? :as_rdf
                 result_graph << [self_uri, RDF::URI(incl_uri), item.self_uri]
-                #puts "        OK"
               end
             else
-
               result_graph << member.as_rdf if member.respond_to? :as_rdf
               result_graph << [self_uri, RDF::URI(incl_uri), member.self_uri]
             end
@@ -271,17 +227,11 @@ module Poseidon
       p_miss = 0
       o_miss = 0
       asrdf.each do |tr|
-
         all += 1
         s_miss +=1 if tr.subject.nil?
         p_miss +=1 if tr.predicate.nil?
         o_miss +=1 if tr.object.nil?
-
-        #puts "#{tr.subject}, #{tr.predicate}, #{tr.object}"
       end
-
-      puts " all: %i, smiss: %i, pmiss: %i, omiss: %i" % [all, s_miss, p_miss, o_miss]
-
       asrdf.dump(opts[:format], opts.select{ |k,v| [:base_uri, :prefixes].include?(k)})
     end
 
